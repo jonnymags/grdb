@@ -132,11 +132,11 @@ int get_edge_weight(tuple_t t, enum_list_t el) {
   return weight;
 }
 
-void print_distances(int *distances, int number, vertexid_t start) {
+void print_distances(int *distances, int number, vertexid_t start, vertexid_t *vertices) {
   printf("Distances from node %llu:\n", start);
   
   for (int i = 0; i < number; i++)
-    printf("%d ", distances[i]);
+    printf("Node %llu: %d ", vertices[i], distances[i]);
 }
 
 void dijkstra(graph_t g, vertexid_t *vertices,vertexid_t start, int number) {
@@ -165,6 +165,6 @@ void dijkstra(graph_t g, vertexid_t *vertices,vertexid_t start, int number) {
     }
   }
 
-  print_distances(distances, number, start);
+  print_distances(distances, number, start, vertices);
 }
 
