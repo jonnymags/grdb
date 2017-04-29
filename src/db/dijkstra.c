@@ -8,20 +8,20 @@
 
 
 int find_number_of_vertices(graph_t g) {
-  int number;
+  int total_vertices = 0;
 
   for (vertex_t v = g->v; v != NULL; v = v->next)
-    number++;
+    total_vertices++;
 
-  return number;
+  return total_vertices;
 }
 
 vertexid_t *get_vertices(graph_t g) {
-  int number, count = 0;
+  int total_vertices, count = 0;
   vertexid_t *ids;
 
-  number = find_number_of_vertices(g);
-  ids = malloc(sizeof(vertexid_t) * number);
+  total_vertices = find_number_of_vertices(g);
+  ids = malloc(sizeof(vertexid_t) * total_vertices);
 
   for (vertex_t v = g->v; v != NULL; v = v->next)
     ids[count++] = v->id;
@@ -29,10 +29,10 @@ vertexid_t *get_vertices(graph_t g) {
   return ids;
 }
 
-int get_min_vertex(int *distances, int *visited, int number) {
+int get_min_vertex(int *distances, int *visited, int total_vertices) {
   int min = INT_MAX, index = -1;
 
-  for (int i = 1; i < number; i++) {
+  for (int i = 0; i < total_vertices; i++) {
     if (visited[i] == 0 && min > distances[i]) {
       min = distances[i];
       index = i;
@@ -45,7 +45,7 @@ int get_min_vertex(int *distances, int *visited, int number) {
 int get_edge_weight(tuple_t t, enum_list_t el) {
   
   attribute_t attr;
-  int i, offset, val, weight, j;
+  int offset, val, weight, j;
   float fval;
   char *s;
   double dval;
@@ -81,7 +81,8 @@ int get_edge_weight(tuple_t t, enum_list_t el) {
       break;
 
     case ENUM:
-      tuple_print_enum(t, offset, el);
+      //tuple_print_enum(t, offset, el);
+      weight = 1;
       break;
 
     case INTEGER:
@@ -125,46 +126,59 @@ int get_edge_weight(tuple_t t, enum_list_t el) {
       break;
 
       case BASE_TYPES_MAX:
+        weight = 1;
         break;
       }
     }
+  else {
+    weight = 1;
+  }
 
   return weight;
 }
 
-void print_distances(int *distances, int number, vertexid_t start, vertexid_t *vertices) {
+void print_distances(int *distances, int total_vertices, vertexid_t start, vertexid_t *vertices) {
   printf("Distances from node %llu:\n", start);
   
-  for (int i = 0; i < number; i++)
+  for (int i = 0; i < total_vertices; i++)
     printf("Node %llu: %d ", vertices[i], distances[i]);
+
+  printf("\n");
 }
 
-void dijkstra(graph_t g, vertexid_t *vertices,vertexid_t start, int number) {
-  int distances[number], visited[number];
+void dijkstra(graph_t g, vertexid_t *vertices,vertexid_t start, int total_vertices) {
+  int distances[total_vertices], visited[total_vertices];
   edge_t e;
 
-  for (int i = 0; i < number; i++) {
+  for (int i = 0; i < total_vertices; i++) {
     distances[i] = INT_MAX;
     visited[i] = 0;
     if (vertices[i] == start)
       distances[i] = 0;
   }
       
-  for (int i = 0; i < number; i++) {
-    int min = get_min_vertex(distances, visited, number);
+  for (int i = 0; i < total_vertices; i++) {
+    int min = get_min_vertex(distances, visited, total_vertices);
     visited[min] = 1;
-    for (int j = 0; j < number; j++) {
-      if ((e = graph_find_edge_by_ids(g, vertices[min], vertices[j]))) {
+
+    for (int j = 0; j < total_vertices; j++) {
+      if (min == j) {
+        continue;
+      }
+      else if ((e = graph_find_edge_by_ids(g, vertices[min], vertices[j]))) {
         int u = min;
         int v = j;
         int w = get_edge_weight(e->tuple, g->el); 
-
+        
         if (distances[u] != INT_MAX && distances[v] > distances[u] + w) 
           distances[v] = distances[u] + w;
       }
     }
   }
 
-  print_distances(distances, number, start, vertices);
+  print_distances(distances, total_vertices, start, vertices);
 }
+
+
+
 

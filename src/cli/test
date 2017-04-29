@@ -1,0 +1,25 @@
+g
+g n
+g e 1 2
+g
+g e 2 4
+g
+g e 4 5
+g e 2 7
+g e 4 7
+g
+g s e int i
+g s
+g t
+g t 1 2 i 3
+g et 2 4 i 2
+g
+g t
+g t 2 4 i 5
+g t 4 5 i 8
+g t 2 7 i 5
+g t
+g t 4 7 i 6
+g t
+g d 1
+quit

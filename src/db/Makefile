@@ -2,6 +2,7 @@ include ../Makefile.rules
 
 OBJS =	edge.o			\
 	enum.o			\
+	dijkstra.o		\
 	graph.o			\
 	schema.o		\
 	string_pool.o		\
