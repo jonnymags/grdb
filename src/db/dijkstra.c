@@ -1,3 +1,7 @@
+/* Dijkstra's SSSP algorithm for GRDB
+ * Written by Jonathan Magiera for CSCI5718
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +12,7 @@
 
 
 int find_number_of_vertices(graph_t g) {
+  assert(g != NULL);
   int total_vertices = 0;
 
   for (vertex_t v = g->v; v != NULL; v = v->next)
@@ -17,6 +22,7 @@ int find_number_of_vertices(graph_t g) {
 }
 
 vertexid_t *get_vertices(graph_t g) {
+  assert(g != NULL);
   int total_vertices, count = 0;
   vertexid_t *ids;
 
@@ -42,16 +48,15 @@ int get_min_vertex(int *distances, int *visited, int total_vertices) {
   return index;
 }
 
-int get_edge_weight(tuple_t t, enum_list_t el) {
-  
+int get_edge_weight(tuple_t t, enum_list_t el) { 
+  assert (t != NULL);
+  assert (t->buf != NULL);
+
   attribute_t attr;
   int offset, val, weight, j;
   float fval;
   char *s;
   double dval;
-
-  assert (t != NULL);
-  assert (t->buf != NULL);
 
   attr = t->s->attrlist;
   offset = tuple_get_offset(t, attr->name);
@@ -137,16 +142,19 @@ int get_edge_weight(tuple_t t, enum_list_t el) {
   return weight;
 }
 
-void print_distances(int *distances, int total_vertices, vertexid_t start, vertexid_t *vertices) {
-  printf("Distances from node %llu:\n", start);
-  
-  for (int i = 0; i < total_vertices; i++)
-    printf("Node %llu: %d ", vertices[i], distances[i]);
+void print_distances(int *distances, int total_vertices, vertexid_t start, vertexid_t *vertices) {  
+  printf("Distances from node %llu:\n", start); 
 
-  printf("\n");
+  for (int i = 0; i < total_vertices; i++) {
+    if (vertices[i] == start)
+      continue;
+
+    printf("Node %llu: %d\n", vertices[i], distances[i]);
+  }  
 }
 
 void dijkstra(graph_t g, vertexid_t *vertices,vertexid_t start, int total_vertices) {
+  assert(g != NULL);
   int distances[total_vertices], visited[total_vertices];
   edge_t e;
 
@@ -178,7 +186,4 @@ void dijkstra(graph_t g, vertexid_t *vertices,vertexid_t start, int total_vertic
 
   print_distances(distances, total_vertices, start, vertices);
 }
-
-
-
 

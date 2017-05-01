@@ -1,0 +1,45 @@
+g n
+g e 1 2
+g e 1 8
+g e 2 3
+g e 2 8
+g e 3 4
+g e 3 6
+g e 3 9
+g e 4 5
+g e 4 6
+g e 5 6
+g e 6 7
+g e 7 8
+g e 7 9
+g e 8 9
+g s e int i
+g t 1 2 i 4
+g t 1 8 i 8
+g t 2 3 i 8
+g t 2 8 i 11
+g t 3 4 i 7
+g t 3 6 i 4
+g t 3 9 i 2 
+g t 4 5 i 9
+g t 4 6 i 14
+g t 5 6 i 10
+g t 6 7 i 2
+g t 7 8 i 1
+g t 7 9 i 6
+g t 8 9 i 7
+g s v char a
+g t 1 a a
+g t 2 a b
+g t 3 a c
+g t 4 a d
+g t 5 a e
+g t 6 a f
+g t 7 a g
+g t 8 a h
+g t 9 a i
+g
+g s
+g t
+g d 1
+quit

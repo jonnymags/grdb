@@ -1,0 +1,45 @@
+g n
+g e 1 2
+g e 1 8
+g e 2 3
+g e 2 8
+g e 3 4
+g e 3 6
+g e 3 9
+g e 4 5
+g e 4 6
+g e 5 6
+g e 6 7
+g e 7 8
+g e 7 9
+g e 8 9
+g s e varchar i
+g t 1 2 i "hi"
+g t 1 8 i "test"
+g t 2 3 i "hello"
+g t 2 8 i "t"
+g t 3 4 i "what"
+g t 3 6 i "get"
+g t 3 9 i "away"
+g t 4 5 i "from"
+g t 4 6 i "me"
+g t 5 6 i "this"
+g t 6 7 i "is"
+g t 7 8 i "just"
+g t 7 9 i "a"
+g t 8 9 i "test"
+g s v char a
+g t 1 a a
+g t 2 a b
+g t 3 a c
+g t 4 a d
+g t 5 a e
+g t 6 a f
+g t 7 a g
+g t 8 a h
+g t 9 a i
+g
+g s
+g t
+g d 1
+quit
